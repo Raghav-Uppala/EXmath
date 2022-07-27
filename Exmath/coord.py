@@ -107,8 +107,30 @@ def perpendicularBisector2Px(x1,y1,x2,y2, steps=False):
     steps_arr.append(f"c = {c}")
 
     steps_arr.append("y = mx + c")
-    steps_arr.append(f"y = {m}x + {c}")
+    steps_arr.append(ans)
 
     return ans,steps_arr
+  elif(steps == False):
+    return ans
+
+def lineFrom2Px(x1,y1,x2,y2, steps=False):
+  m = gradient2P2Dx(x1, y1, x2, y2, steps=True)
+  c = y1 - m[0]*x1
+  ans = f"y = {m[0]}x + {c}"
+
+  if(steps == True):
+    steps_arr = []
+    for x in m[1]:
+      steps_arr.append(x)
+    
+    steps_arr.append("y = mx + c")
+    steps_arr.append(f"c = {y1} - {m[0]} * {x1}")
+    steps_arr.append(f"c = {y1} - {m[0] * x1}")
+    steps_arr.append(f"c = {c}")
+
+    steps_arr.append("y = mx + c")
+    steps_arr.append(ans)
+    
+    return ans, steps_arr
   elif(steps == False):
     return ans
