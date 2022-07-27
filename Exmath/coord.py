@@ -84,7 +84,31 @@ def midpoint2Px(x1,y1,x2,y2, steps=False):
   elif(steps == False):
     return midpoint
 
-# def perpendicularBisector2Px(x1,y1,x2,y2, steps=False):
-#   midpoint = midpoint2Px(x1,y1,x2,y2)
-#   m1 = gradient2P2Dx(x1,y1,x2,y2)
-#   m = gradientFAx(m1, 90, r=)
+def perpendicularBisector2Px(x1,y1,x2,y2, steps=False):
+  midpoint = midpoint2Px(x1,y1,x2,y2)
+  m1 = gradient2P2Dx(x1,y1,x2,y2)
+  m = gradientFAx(m1, 90, r=False)
+  c = midpoint[1] - m*midpoint[0]
+
+  ans = f"y = {m}x + {c}"
+
+  if(steps == True):
+    steps_arr = []
+    steps_arr.append("gradient = -1/((y2 - y1)/(x2 - x1))")
+    steps_arr.append(f"gradient = -1/(({y2} - {y1})/({x2} - {x1}))")
+    steps_arr.append(f"gradient = -1/({y2 - y1}/{x2 - x1})")
+    steps_arr.append(f"gradient = -1/{y2 - y1/x2 - x1}")
+    steps_arr.append(f"gradient = {m}")
+    
+    steps_arr.append("y = mx + c")
+    steps_arr.append(f"{midpoint[1]} = {m}{midpoint[0]} + c")
+    steps_arr.append(f"c = {midpoint[1]} - {m}{midpoint[0]}")
+    steps_arr.append(f"c = {midpoint[1]} - {m * midpoint[0]}")
+    steps_arr.append(f"c = {c}")
+
+    steps_arr.append("y = mx + c")
+    steps_arr.append(f"y = {m}x + {c}")
+
+    return ans,steps_arr
+  elif(steps == False):
+    return ans
