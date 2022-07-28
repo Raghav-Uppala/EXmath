@@ -1,6 +1,7 @@
 from math import *
 from .math_func import *
 
+#steps added, working
 def meanx(data, steps=False):
   if(steps != False and steps != True):
     return "error"
@@ -18,6 +19,7 @@ def meanx(data, steps=False):
     steps_arr.append(f"mean = {mean}")
     return (mean,steps_arr)
 
+#steps added, working
 def medianx(data, steps=False):
   if(steps != False and steps != True):
     return "error"
@@ -44,6 +46,7 @@ def medianx(data, steps=False):
       steps_arr.append(f"median = {median}")
     return (median,steps_arr)
 
+#steps added, working
 def modex(data):
   freq = {}
   for x in data:

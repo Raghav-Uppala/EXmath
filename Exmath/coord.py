@@ -43,12 +43,12 @@ def gradientFAx(m, theta, steps=False, r=True, round=3):
     if(theta+atan(m) == pi/2 or theta+atan(m) == ((3*pi)/2)):
       return None,None
     else:
-      gradient =  roundx(tan(theta+atan(m)),round)
+      gradient =  roundx(tan(theta+atan(m)),decimals=round)
     if(steps == True):
       steps_arr = []
       steps_arr.append("m2 = tan(A + atan(m1))")
-      steps_arr.append(f"m2 = tan({theta} + {roundx(atan(m),round)})")
-      steps_arr.append(f"m2 = tan({roundx(theta + atan(m),round)})")
+      steps_arr.append(f"m2 = tan({theta} + {roundx(atan(m),decimals=round)})")
+      steps_arr.append(f"m2 = tan({roundx(theta + atan(m),decimals=round)})")
       steps_arr.append(f"m2 = {gradient}")
       return gradient,steps_arr
     return gradient
@@ -56,12 +56,12 @@ def gradientFAx(m, theta, steps=False, r=True, round=3):
     if(radians(theta)+atan(m) == pi/2 or radians(theta)+atan(m) == ((3*pi)/2)):
       return None,None
     else:
-      gradient = roundx(tan(radians(theta+degrees(atan(m)))),round)
+      gradient = roundx(tan(radians(theta+degrees(atan(m)))),decimals=round)
     if(steps == True):
       steps_arr = []
       steps_arr.append("m2 = tan(A + atan(m1))")
-      steps_arr.append(f"m2 = tan({theta} + {roundx(degrees(atan(m)),round)})")
-      steps_arr.append(f"m2 = tan({theta + roundx(degrees(atan(m)),round)})")
+      steps_arr.append(f"m2 = tan({theta} + {roundx(degrees(atan(m)),decimals=round)})")
+      steps_arr.append(f"m2 = tan({theta + roundx(degrees(atan(m)),decimals=round)})")
       steps_arr.append(f"m2 = {gradient}")
       return gradient,steps_arr
     return gradient
@@ -103,7 +103,7 @@ def midpoint2Px(x1,y1,x2,y2, steps=False):
 def perpendicularBisector2Px(x1,y1,x2,y2, steps=False):
   midpoint = midpoint2Px(x1,y1,x2,y2, steps=steps)
   m1 = gradient2P2Dx(x1,y1,x2,y2, steps=steps)
-  
+
   if(steps == True):
     ans = lineFrom1P1Gx(midpoint[0][0], midpoint[0][1], -1/m1[0], steps=True)
     steps_arr = []
