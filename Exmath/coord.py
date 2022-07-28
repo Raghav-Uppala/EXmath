@@ -1,6 +1,7 @@
 from math import *
 from .math_func import *
 
+#steps added, working
 def distance2P2Dx(x1,y1,x2,y2, steps=False):
   if(steps != False and steps != True):
     return "error"
@@ -19,6 +20,7 @@ def distance2P2Dx(x1,y1,x2,y2, steps=False):
   else:
     return dist
 
+#steps added, working
 def gradient2P2Dx(x1,y1,x2,y2, steps=False):
   if(steps != False and steps != True):
     return "error"
@@ -35,6 +37,7 @@ def gradient2P2Dx(x1,y1,x2,y2, steps=False):
   else:
     return m
 
+#steps added, working
 def gradientFAx(m, theta, steps=False, r=True, round=3):
   if(r == True):
     if(theta+atan(m) == pi/2 or theta+atan(m) == ((3*pi)/2)):
@@ -63,14 +66,26 @@ def gradientFAx(m, theta, steps=False, r=True, round=3):
       return gradient,steps_arr
     return gradient
 
+#steps added, working
 def distance2P3Dx(x1,y1,z1,x2,y2,z2, steps=False):
   if(steps != False and steps != True):
     return "error"
-  print(distance2P2Dx(x1,y1,x2,y2)+(z2-z1))
   dist = sqrt(distance2P2Dx(x1,y1,x2,y2)**2+(z2-z1)**2)
+  print(dist, dist**2)
+  if (steps == True):
+    steps_arr = []
+    steps_arr.append("distance = sqrt((x2 - x1)^2 + (y2 - y1)^2+(z2 - z1)^2)")
+    steps_arr.append(f"distance = sqrt(({x2} - {x1})^2 + ({y2} - {y1})^2+({z2} - {z1})^2)")
+    steps_arr.append(f"distance = sqrt({x2 - x1}^2 + {y2 - y1}^2 + {z2 - z1}^2)")
+    steps_arr.append(f"distance = sqrt({(x2 - x1)**2} + {(y2 - y1)**2} + {(z2 - z1)**2})")
+    steps_arr.append(f"distance = sqrt({dist**2})")
+    steps_arr.append(f"distance = {dist} units")
 
-  return dist
+    return dist,steps_arr
+  elif(steps == False):
+    return dist
 
+#steps added, working
 def midpoint2Px(x1,y1,x2,y2, steps=False):
   midpoint = ((x1+x2)/2, (y1+y2)/2)
   if(steps == True):
@@ -84,6 +99,7 @@ def midpoint2Px(x1,y1,x2,y2, steps=False):
   elif(steps == False):
     return midpoint
 
+#steps added, working
 def perpendicularBisector2Px(x1,y1,x2,y2, steps=False):
   midpoint = midpoint2Px(x1,y1,x2,y2)
   m1 = gradient2P2Dx(x1,y1,x2,y2)
@@ -113,6 +129,7 @@ def perpendicularBisector2Px(x1,y1,x2,y2, steps=False):
   elif(steps == False):
     return ans
 
+#steps added, working
 def lineFrom2Px(x1,y1,x2,y2, steps=False):
   m = gradient2P2Dx(x1, y1, x2, y2, steps=True)
   c = y1 - m[0]*x1
@@ -134,3 +151,26 @@ def lineFrom2Px(x1,y1,x2,y2, steps=False):
     return ans, steps_arr
   elif(steps == False):
     return ans
+
+#steps not added, working
+def collinearTest3P2Dx(x1,y1,x2,y2,x3,y3, steps=False):
+  m12 = gradient2P2Dx(x1,y1,x2,y2, steps=steps)
+  m23 = gradient2P2Dx(x2,y2,x3,y3, steps=steps)
+
+  if(steps == True):
+    steps_arr = []
+    for x in m12[1]:
+      step = x[:8] + " 1" + x[8:]
+      steps_arr.append(step)
+    for x in m23[1]:
+      step = x[:8] + " 2" + x[8:]
+      steps_arr.append(step)
+    if(float(m12[0]) == float(m23[0])):
+      col =  True
+      steps_arr.append("Because gradient 1 = gradient 2, the points are collinear")
+    else:
+      col =  False
+      steps_arr.append("Because gradient 1 != gradient 2, the points are not collinear")
+    return col, steps_arr
+  elif(steps == False):
+    return col
