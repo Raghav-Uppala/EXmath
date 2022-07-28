@@ -101,32 +101,28 @@ def midpoint2Px(x1,y1,x2,y2, steps=False):
 
 #steps added, working
 def perpendicularBisector2Px(x1,y1,x2,y2, steps=False):
-  midpoint = midpoint2Px(x1,y1,x2,y2)
-  m1 = gradient2P2Dx(x1,y1,x2,y2)
-  m = gradientFAx(m1, 90, r=False)
-  c = midpoint[1] - m*midpoint[0]
-
-  ans = f"y = {m}x + {c}"
-
+  midpoint = midpoint2Px(x1,y1,x2,y2, steps=steps)
+  m1 = gradient2P2Dx(x1,y1,x2,y2, steps=steps)
+  
   if(steps == True):
+    ans = lineFrom1P1Gx(midpoint[0][0], midpoint[0][1], -1/m1[0], steps=True)
     steps_arr = []
-    steps_arr.append("gradient = -1/((y2 - y1)/(x2 - x1))")
-    steps_arr.append(f"gradient = -1/(({y2} - {y1})/({x2} - {x1}))")
-    steps_arr.append(f"gradient = -1/({y2 - y1}/{x2 - x1})")
-    steps_arr.append(f"gradient = -1/{y2 - y1/x2 - x1}")
-    steps_arr.append(f"gradient = {m}")
+    for x in midpoint[1]:
+      steps_arr.append(x)
+
+    for x in m1[1]:
+      steps_arr.append(x)
+
+    steps_arr.append("perpendicular gradient = -1/m")
+    steps_arr.append(f"perpendicular gradient = -1/{m1[0]}")
+    steps_arr.append(f"perpendicular gradient = {-1/m1[0]}")
     
-    steps_arr.append("y = mx + c")
-    steps_arr.append(f"{midpoint[1]} = {m}{midpoint[0]} + c")
-    steps_arr.append(f"c = {midpoint[1]} - {m}{midpoint[0]}")
-    steps_arr.append(f"c = {midpoint[1]} - {m * midpoint[0]}")
-    steps_arr.append(f"c = {c}")
+    for x in ans[1]:
+      steps_arr.append(x)
 
-    steps_arr.append("y = mx + c")
-    steps_arr.append(ans)
-
-    return ans,steps_arr
+    return ans[0],steps_arr
   elif(steps == False):
+    ans = lineFrom1P1Gx(midpoint[0], midpoint[1], -1/m1)
     return ans
 
 #steps added, working
@@ -174,3 +170,22 @@ def collinearTest3P2Dx(x1,y1,x2,y2,x3,y3, steps=False):
     return col, steps_arr
   elif(steps == False):
     return col
+
+#steps added, working
+def lineFrom1P1Gx(x,y,m, steps=False):
+  c = y - m*x
+  ans = f"y = {m}x + c"
+
+  if(steps == True):
+    steps_arr = []
+    steps_arr.append("c = y - mx")
+    steps_arr.append(f"c = {y} - {m}*{x}")
+    steps_arr.append(f"c = {y} - {m*x}")
+    steps_arr.append(f"c = {c}")
+    
+    steps_arr.append("y = mx + c")
+    steps_arr.append(f"y = {m}x + {c}")
+
+    return ans, steps_arr
+  elif(steps == False):
+    return ans
