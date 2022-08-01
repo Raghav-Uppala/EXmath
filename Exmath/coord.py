@@ -5,7 +5,7 @@ from .math_func import *
 def distance2P2Dx(x1,y1,x2,y2, steps=False):
   if(steps != False and steps != True):
     return "error"
-  dist = sqrt((x2-x1)**2 + (y2-y1))
+  dist = sqrt((x2-x1)**2 + (y2-y1)**2)
   if(steps == True):
     steps_arr = []
     steps_arr.append("distance = sqrt((x2 - x1)^2 + (y2 - y1)^2)")
@@ -174,7 +174,7 @@ def collinearTest3P2Dx(x1,y1,x2,y2,x3,y3, steps=False):
 #steps added, working
 def lineFrom1P1Gx(x,y,m, steps=False):
   c = y - m*x
-  ans = f"y = {m}x + c"
+  ans = f"y = {m}x + {c}"
 
   if(steps == True):
     steps_arr = []
