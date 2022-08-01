@@ -1,5 +1,8 @@
 from math import *
 from .math_func import *
+from prettytable import *
+import numpy as np
+import matplotlib.pyplot as plt
 
 #steps added, working
 def meanx(data, steps=False):
@@ -61,11 +64,46 @@ def modex(data):
   mode = [i for i,j in freq.items() if j == freq_arr[0]]
   return mode
 
-# def freq_table(data, cumulative=False, table=False):
-#   freq = []
-#   freq_index = []
-#   for x in data:
-#     if x in freq_index:
-#       freq[x] += 1
-#     else:
-#       freq_index.append(x)
+def freqTableDx(data, cumulative=False, table=False):
+  freq = {}
+  for x in data:
+    if(x in freq):
+      freq[x] += 1
+    else:
+      freq[x] = 1
+  sorted_freq = sorted(freq.items())
+  if(cumulative == True):
+    cumu = []
+    for x in range(0,len(sorted_freq)):
+      if(x == 0):
+        cumu.append(sorted_freq[x])
+      else:
+        cumu.append((sorted_freq[x][0], cumu[x-1][1] + sorted_freq[x][1]))
+    if(table != True):
+      return cumu
+
+  if(table == True):
+    freqtable = PrettyTable(["Data", "Frequency"])
+    for x in sorted_freq:
+      freqtable.add_row(x)
+    if(cumulative == True):
+      cumutable = PrettyTable(["Data", "Cumulative Frequency"])
+      for x in cumu:
+        cumutable.add_row(x)
+      return cumutable, cumu
+    return freqtable, sorted_freq
+
+  return sorted_freq
+
+def freqGraphDx(data, cumulative=False, color="maroon", width=0.4): 
+  data_freq = freqTableDx(data, cumulative=cumulative)
+  
+  xaxis = []
+  yaxis = []
+  
+  for x in data_freq:
+    xaxis.append(x[0])
+    yaxis.append(x[1])
+  plt.bar(xaxis, yaxis, color=color,
+        width = width)
+  plt.show()
