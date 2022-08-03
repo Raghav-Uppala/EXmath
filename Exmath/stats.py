@@ -64,6 +64,7 @@ def modex(data):
   mode = [i for i,j in freq.items() if j == freq_arr[0]]
   return mode
 
+#working
 def freqTableDx(data, cumulative=False, table=False):
   freq = {}
   for x in data:
@@ -95,6 +96,7 @@ def freqTableDx(data, cumulative=False, table=False):
 
   return sorted_freq
 
+#working
 def freqGraphDx(data, cumulative=False, color="maroon", width=0.4): 
   data_freq = freqTableDx(data, cumulative=cumulative)
   
@@ -106,4 +108,65 @@ def freqGraphDx(data, cumulative=False, color="maroon", width=0.4):
     yaxis.append(x[1])
   plt.bar(xaxis, yaxis, color=color,
         width = width)
+  plt.show()
+
+#working
+def freqTableCx(data, step, cumulative=False, table=False, bound=True):
+  freq = freqTableDx(data)
+  lower_bound = freq[0][0]
+  upper_bound = lower_bound+step
+
+  new_freq = {}
+  bounds = []
+  true = True
+  count = 0
+  prev_freq = 0
+  while true == True:
+    x = freq[count]
+    if(x[0] >=   upper_bound):
+      lower_bound = upper_bound
+      upper_bound += step
+    if(x[0] >= lower_bound and x[0] < upper_bound):
+      if([lower_bound,upper_bound] not in bounds):
+        bounds.append([lower_bound,upper_bound])
+      if(f"{lower_bound} <= x < {upper_bound}" in new_freq.keys()):
+        new_freq[f"{lower_bound} <= x < {upper_bound}"] = new_freq[f"{lower_bound} <= x < {upper_bound}"] + x[1]
+      else:
+        new_freq[f"{lower_bound} <= x < {upper_bound}"] = x[1] 
+        if(cumulative == True):
+          new_freq[f"{lower_bound} <= x < {upper_bound}"] = x[1] + prev_freq
+      count += 1
+      if(cumulative == True):
+        prev_freq = new_freq[f"{lower_bound} <= x < {upper_bound}"]
+    if(count == len(freq)):
+      true = False
+
+  s_freq = new_freq.items()
+
+  if(table == True):
+    freqtable = PrettyTable(["Data", "Frequency"])
+    if(cumulative == True):
+      freqtable = PrettyTable(["Data", "Cumulative Frequency"])
+    new_freq_keys = new_freq.keys()
+    for x in new_freq_keys:
+      freqtable.add_row([x, new_freq[x]])
+    if(bound == True):
+      return s_freq, freqtable, bounds
+    
+    return s_freq, freqtable
+  
+  if(bound == True):
+    return s_freq, bounds
+
+  return s_freq
+
+#working  
+def freqGraphCx(data, step, cumulative=False, color="maroon"):
+  freq = freqTableCx(data, step, cumulative=cumulative, bound=True)
+  bounds = freq[1]
+  bound = []
+  for x in bounds:
+    bound.append(x[0])
+  bound.append(bounds[-1][1])
+  plt.hist(data, bound, color=color, cumulative=cumulative)
   plt.show()
