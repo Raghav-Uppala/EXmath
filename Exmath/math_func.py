@@ -26,17 +26,15 @@ def roundx(n, decimals=0, mode=0):
     return floor(n)
   elif(mode == 4):
     #rounding half away from 0
-    multiplier = 10 ** decimals
-    ans = floor(abs(n)*multiplier + 0.5) / multiplier
-    if( n < 0 ):
+    ans = roundx(abs(n), decimals=decimals, mode=0)
+    if(n < 0 ):
       return ans * -1
     else:
-      return ans
+      return ans 
   elif(mode == 5):
     #rounding half toward 0
-    multiplier = 10 ** decimals
-    ans = floor(n*multiplier + 0.4) / multiplier
-    if( n < 0 ):
+    ans = roundx(abs(n), decimals=decimals, mode=1)
+    if(n < 0 ):
       return ans * -1
     else:
-      return ans
+      return ans 

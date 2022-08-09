@@ -65,6 +65,29 @@ def modex(data):
   return mode
 
 #working
+def rangex(data):
+  sorted_data = sorted(data)
+  range = sorted_data[-1] - sorted_data[0]
+  return range
+
+#working
+def IQRx(data):
+  sorted_data = sorted(data)
+  n = len(data)
+  if((n+1) % 2 == 0):
+    Q1 = medianx(sorted_data[:int((n+1)/2)-1])
+    Q3 = medianx(sorted_data[int((n+1)/2)+1:])
+  else:
+    Q1 = medianx(sorted_data[:floor((n+1)/2)])
+    Q3 = medianx(sorted_data[ceil((n+1)/2):])
+  IQR = Q3 - Q1
+  return Q1, Q3, IQR
+
+def boxPlotx(data, vert=False, showOutliers=True, range=(0,100)):
+  plt.boxplot(data, vert=vert, showfliers=showOutliers, whis=range)
+  plt.show()
+
+#working
 def freqTableDx(data, cumulative=False, table=False):
   freq = {}
   for x in data:
@@ -170,3 +193,44 @@ def freqGraphCx(data, step, cumulative=False, color="maroon"):
   bound.append(bounds[-1][1])
   plt.hist(data, bound, color=color, cumulative=cumulative)
   plt.show()
+
+#working
+def freqGraphCatx(data, color="maroon", width=0.4):
+  xaxis = []
+  yaxis = []
+  
+  for x in data.keys():
+    xaxis.append(x)
+    yaxis.append(data[x])
+  plt.bar(xaxis, yaxis, color=color,
+        width = width)
+  plt.show()
+
+#working
+def fivenumAnalysisx(data, addIQR=False, addrange=False, toprint=False):
+  sorted_data = sorted(data)
+  iqr = IQRx(data)
+
+  min = sorted_data[0]
+  max = sorted_data[-1]
+  median = medianx(sorted_data)
+  Q1 = iqr[0]
+  Q3 = iqr[1]
+
+  if(toprint == True):
+    print("min", min)
+    print("max", max)
+    print("median", median)
+    print("Q1", Q1)
+    print("Q3",  Q3)
+    if(addIQR == True):
+      print("IQR",  iqr[2])
+    if(addrange == True):
+      print("range", rangex(data))
+  elif(toprint == False):
+    returnarr = [min,max,median,Q1,Q3]
+    if(addIQR == True):
+      returnarr.append(iqr[2])
+    if(addrange == True):
+      returnarr.append(rangex(data))
+    return returnarr
