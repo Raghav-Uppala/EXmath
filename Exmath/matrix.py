@@ -74,21 +74,35 @@ def cols(matrix):
 
   return colsmatrix
 
+#working
 def dotproductVVx(vectorA, vectorB):
   vectorAB = 0
   for x in range(len(vectorA)):
     vectorAB += vectorA[x]*vectorB[x]
   return vectorAB
 
-#not working
+# not working
 def dotproductMMx(matrixA, matrixB):
   format_matrixA = formatMatrix(matrixA)
   format_matrixB = formatMatrix(matrixB)
 
   if (checkRows(format_matrixA) and checkRows(format_matrixB) and len(format_matrixA[0]) == len(format_matrixB)):
-    new_matrix = []
+    m = len(format_matrixB[0])
+    n = len(format_matrixA)
+    print(n, m)
+    new_matrix = [[]]
     cols_matrixB = cols(format_matrixB)
+    count = 0
+    append = 0
+    print()
     for x in format_matrixA:
       for i in cols_matrixB:
-        new_matrix.append(dotproductVVx(x, i))
+        if(count + 1 > n):
+          count = 0
+          new_matrix.append([])
+          append += 1
+        print(append)
+        new_matrix[append].append(dotproductVVx(x, i))
+        print(count)
+        count += 1
     return new_matrix
