@@ -9,6 +9,13 @@ def isInteger(N):
     return True
 
 #working
+def factorialx(n):
+  if(n == 1):
+    return 1
+  else:
+    return n*factorial(n-1)
+
+#working
 def roundx(n, decimals=0, mode=0):
   if mode == 0:
     #round half up

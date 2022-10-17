@@ -1,5 +1,4 @@
-#working
-from numpy import matrix
+from math import *
 
 #working
 def checkRows(matrix):
@@ -20,7 +19,7 @@ def formatMatrix(matrix):
       new_matrix.append(x)
   return new_matrix
 
-
+#working
 def additionSMx(scaler, matrix):
   format_matrix = formatMatrix(matrix)
   new_matrix = []
@@ -106,3 +105,4 @@ def dotproductMMx(matrixA, matrixB):
         print(count)
         count += 1
     return new_matrix
+
